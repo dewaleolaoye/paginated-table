@@ -1,6 +1,3 @@
-
-const startApp = async () => {
-    
-};
+const startApp = async () => {};
 
 document.addEventListener('DOMContentLoaded', startApp);
