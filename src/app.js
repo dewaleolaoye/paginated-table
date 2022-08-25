@@ -1,3 +1,5 @@
-const startApp = async () => {};
+const startApp = async () => {
+  console.log('hello');
+};
 
 document.addEventListener('DOMContentLoaded', startApp);
