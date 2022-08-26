@@ -1,7 +1,7 @@
 let currentPage = 1;
 export const BASE_URL = `https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84`;
 
-const tbody = document.getElementById('tbody');
+const tbody = document.querySelector('.tbody');
 const loader = document.getElementById('loader');
 const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.previous');
