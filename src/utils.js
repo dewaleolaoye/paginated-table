@@ -22,7 +22,26 @@ const loaderStatus = (display) => {
   loader.style.display = display;
 };
 
-export const showTableData = async (currPage, clickCounter) => {
+export const getData = async (url) => {
+  try {
+    const response = await fetch(url);
+
+    if (response) {
+      loaderStatus('none');
+    }
+
+    const data = await response.json();
+    const arr = Object.values(data.results[0])[0];
+    const arr2 = Object.values(data.results[0])[1];
+
+    paginatedData = [...arr, ...arr2];
+  } catch (error) {
+    loaderStatus('none');
+    console.log(error, 'error here from the app');
+  }
+};
+
+export const showTableData = async (currPage = 1, clickCounter = 0) => {
   let tdata = '';
   const page = `&page=${currPage}`;
 
@@ -64,8 +83,6 @@ function handlePreviousPage() {
     showTableData(currentPage, clickCount);
   }
 }
-
-showTableData(currentPage, clickCount);
 
 nextBtn.addEventListener('click', handleNextPage);
 prevBtn.addEventListener('click', handlePreviousPage);
