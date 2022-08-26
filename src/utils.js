@@ -1,34 +1,71 @@
-export const showTableData = (data) => {
-  console.log(data, 'RESPONSE');
+let currentPage = 1;
+export const BASE_URL = `https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84`;
 
+const tbody = document.getElementById('tbody');
+const loader = document.getElementById('loader');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.previous');
+
+let clickCount = 0;
+
+let paginatedData = [];
+
+const isEven = (num) => {
+  return num % 2 === 0;
+};
+
+const isOdd = (num) => {
+  return num % 2 !== 0;
+};
+
+const loaderStatus = (display) => {
+  loader.style.display = display;
+};
+
+export const showTableData = async (currPage, clickCounter) => {
   let tdata = '';
+  const page = `&page=${currPage}`;
 
-  data.forEach(
+  if (isEven(clickCounter)) {
+    loaderStatus('block');
+    await getData(BASE_URL + page);
+  }
+
+  const sliceRange = isEven(clickCounter) ? '0, 5' : '5, 10';
+
+  const a = sliceRange.split(',')[0];
+  const b = sliceRange.split(',')[1];
+
+  paginatedData.slice(a, b).forEach(
     ({ id, row, gender, age }) =>
       (tdata += `
-    <tr data-entryid=${id}>
-      <td>${row}</td>
-      <td>${gender}</td>
-      <td>${age}</td>
-    </tr>
-    `)
+      <tr data-entryid=${id}>
+        <td>${row}</td>
+        <td>${gender}</td>
+        <td>${age}</td>
+      </tr>
+      `)
   );
 
-  document.getElementById('tbody').innerHTML = tdata;
+  tbody.innerHTML = tdata;
 };
 
-export const handleNextPage = (page) => {
-  console.log(page, 'number');
+function handleNextPage() {
+  currentPage++;
+  clickCount++;
+  showTableData(currentPage, clickCount);
+}
 
-  const btn = document.querySelector('next');
+function handlePreviousPage() {
+  if (currentPage > 1) {
+    currentPage -= 1;
+    clickCount -= 1;
 
-  btn.addEventListener('click', () => console.log('clicked next'));
-};
+    showTableData(currentPage, clickCount);
+  }
+}
 
-export const handlePreviousPage = (page) => {
-  console.log(page, 'number');
+showTableData(currentPage, clickCount);
 
-  const btn = document.querySelector('previous');
-
-  btn.addEventListener('click', () => console.log('clicked previous'));
-};
+nextBtn.addEventListener('click', handleNextPage);
+prevBtn.addEventListener('click', handlePreviousPage);
