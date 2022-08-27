@@ -1,6 +1,6 @@
-# Frontend Assessment
-
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/90bf871fa8124850965ac304cf3b7e97)](https://www.codacy.com/gh/dewaleolaoye/paginated-table/dashboard?utm_source=github.com&utm_medium=referral&utm_content=dewaleolaoye/paginated-table&utm_campaign=Badge_Grade)
+
+# Frontend Assessment
 
 Build and deploy a very simple frontend app for paginated data, that does the following
 

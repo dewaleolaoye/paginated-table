@@ -1,10 +1,11 @@
 let currentPage = 1;
-export const BASE_URL = `https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84`;
+const BASE_URL = `https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84`;
 
 const tbody = document.querySelector('.tbody');
 const loader = document.getElementById('loader');
 const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.previous');
+const pagePreview = document.querySelector('.page-preview');
 
 let clickCount = 0;
 
@@ -12,10 +13,6 @@ let paginatedData = [];
 
 const isEven = (num) => {
   return num % 2 === 0;
-};
-
-const isOdd = (num) => {
-  return num % 2 !== 0;
 };
 
 const loaderStatus = (display) => {
@@ -73,6 +70,7 @@ function handleNextPage() {
   currentPage++;
   clickCount++;
   showTableData(currentPage, clickCount);
+  pagePreview.textContent = `Showing page ${currentPage}`;
 }
 
 function handlePreviousPage() {
@@ -81,8 +79,10 @@ function handlePreviousPage() {
     clickCount -= 1;
 
     showTableData(currentPage, clickCount);
+    pagePreview.textContent = `Showing page ${currentPage}`;
   }
 }
 
+pagePreview.textContent = `Showing page ${currentPage}`;
 nextBtn.addEventListener('click', handleNextPage);
 prevBtn.addEventListener('click', handlePreviousPage);
