@@ -79,7 +79,7 @@ function handlePreviousPage() {
     clickCount -= 1;
 
     showTableData(currentPage, clickCount);
-    pagePreview.textContent = `Showing page ${currentPage}`;
+    pagePreview.textContent = `Showing Page ${currentPage}`;
   }
 }
 
