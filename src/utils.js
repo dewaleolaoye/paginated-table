@@ -6,8 +6,14 @@ const loader = document.getElementById('loader');
 const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.previous');
 const pagePreview = document.querySelector('.page-preview');
+const errText = document.querySelector('.error');
 
 let paginatedData = [];
+let prevUrl = '';
+let sliceRange = [];
+
+let a = 0;
+let b = 5;
 
 const isEven = (num) => {
   return num % 2 === 0;
@@ -29,10 +35,14 @@ export const getData = async (url) => {
     const arr = Object.values(data.results[0])[0];
     const arr2 = Object.values(data.results[0])[1];
 
+    prevUrl = data.results[0].paging?.previous;
+
     paginatedData = [...arr, ...arr2];
   } catch (error) {
     loaderStatus('none');
     console.log(error, 'error here from the app');
+
+    errText.textContent = 'Something went wrong';
   }
 };
 
@@ -41,15 +51,19 @@ export const showTableData = async (currPage = 1, action = '') => {
   const page = `&page=${currPage}`;
 
   if (!isEven(currentPage) && action !== 'prev') {
-    console.log('ODD VALUE HERE');
     loaderStatus('block');
     await getData(BASE_URL + page);
   }
 
-  const sliceRange = !isEven(currentPage) ? '0, 5' : '5, 10';
+  if (action === 'prev' && isEven(currPage)) {
+    loaderStatus('block');
+    await getData(prevUrl);
+  }
 
-  const a = sliceRange.split(',')[0];
-  const b = sliceRange.split(',')[1];
+  sliceRange = !isEven(currentPage) ? '0, 5' : '5, 10';
+
+  a = sliceRange.split(',')[0];
+  b = sliceRange.split(',')[1];
 
   paginatedData.slice(a, b).forEach(
     ({ id, row, gender, age }) =>
@@ -75,9 +89,12 @@ function handleNextPage() {
 function handlePreviousPage() {
   if (currentPage > 1) {
     currentPage -= 1;
-    console.log(currentPage, 'PREVIOUS CURRENT PAGE');
+    // console.log(currentPage, 'PREVIOUS CURRENT PAGE');
 
-    showTableData(currentPage, 'prev');
+    // showTableData(currentPage, 'prev');
+    showTableData(currentPage, 'prev', prevUrl);
+
+    // console.log(prevUrl, 'prevurl');
     pagePreview.textContent = `Showing Page ${currentPage}`;
   }
 }
