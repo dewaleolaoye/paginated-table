@@ -7,8 +7,6 @@ const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.previous');
 const pagePreview = document.querySelector('.page-preview');
 
-let clickCount = 0;
-
 let paginatedData = [];
 
 const isEven = (num) => {
@@ -38,16 +36,17 @@ export const getData = async (url) => {
   }
 };
 
-export const showTableData = async (currPage = 1, clickCounter = 0) => {
+export const showTableData = async (currPage = 1, action = '') => {
   let tdata = '';
   const page = `&page=${currPage}`;
 
-  if (isEven(clickCounter)) {
+  if (!isEven(currentPage) && action !== 'prev') {
+    console.log('ODD VALUE HERE');
     loaderStatus('block');
     await getData(BASE_URL + page);
   }
 
-  const sliceRange = isEven(clickCounter) ? '0, 5' : '5, 10';
+  const sliceRange = !isEven(currentPage) ? '0, 5' : '5, 10';
 
   const a = sliceRange.split(',')[0];
   const b = sliceRange.split(',')[1];
@@ -68,17 +67,17 @@ export const showTableData = async (currPage = 1, clickCounter = 0) => {
 
 function handleNextPage() {
   currentPage++;
-  clickCount++;
-  showTableData(currentPage, clickCount);
+
+  showTableData(currentPage);
   pagePreview.textContent = `Showing Page ${currentPage}`;
 }
 
 function handlePreviousPage() {
   if (currentPage > 1) {
     currentPage -= 1;
-    clickCount -= 1;
+    console.log(currentPage, 'PREVIOUS CURRENT PAGE');
 
-    showTableData(currentPage, clickCount);
+    showTableData(currentPage, 'prev');
     pagePreview.textContent = `Showing Page ${currentPage}`;
   }
 }
