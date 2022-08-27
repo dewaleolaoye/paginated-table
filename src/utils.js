@@ -70,7 +70,7 @@ function handleNextPage() {
   currentPage++;
   clickCount++;
   showTableData(currentPage, clickCount);
-  pagePreview.textContent = `Showing page ${currentPage}`;
+  pagePreview.textContent = `Showing Page ${currentPage}`;
 }
 
 function handlePreviousPage() {
@@ -83,6 +83,6 @@ function handlePreviousPage() {
   }
 }
 
-pagePreview.textContent = `Showing page ${currentPage}`;
+pagePreview.textContent = `Showing Page ${currentPage}`;
 nextBtn.addEventListener('click', handleNextPage);
 prevBtn.addEventListener('click', handlePreviousPage);
