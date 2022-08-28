@@ -40,7 +40,6 @@ export const getData = async (url) => {
     paginatedData = [...arr, ...arr2];
   } catch (error) {
     loaderStatus('none');
-    console.log(error, 'error here from the app');
 
     errText.textContent = 'Something went wrong';
   }
@@ -89,12 +88,9 @@ function handleNextPage() {
 function handlePreviousPage() {
   if (currentPage > 1) {
     currentPage -= 1;
-    // console.log(currentPage, 'PREVIOUS CURRENT PAGE');
 
-    // showTableData(currentPage, 'prev');
     showTableData(currentPage, 'prev', prevUrl);
 
-    // console.log(prevUrl, 'prevurl');
     pagePreview.textContent = `Showing Page ${currentPage}`;
   }
 }
